@@ -1,6 +1,6 @@
-import { Profile } from '@prisma/client';
-import prisma from '../libs/prisma';
-import { profileDTO } from '../DTO/profile-DTO';
+import { Profile } from "@prisma/client";
+import prisma from "../libs/prisma";
+import { profileDTO } from "../DTO/profile-DTO";
 
 class ProfileRepository {
   async findProfileByUserId(userId: number): Promise<Profile | null> {
@@ -25,11 +25,8 @@ class ProfileRepository {
     return profile;
   }
 
-  async putProfileByProfileId(
-    id: number,
-    newProfile: profileDTO
-  ): Promise<Profile | null> {
-    const { email, ...attributeProfile } = newProfile;
+  async putProfileByProfileId(id: number, newProfile: profileDTO): Promise<Profile | null> {
+    const { ...attributeProfile } = newProfile;
 
     const profile = await prisma.profile.update({
       where: {
@@ -37,21 +34,13 @@ class ProfileRepository {
       },
       data: {
         ...attributeProfile,
-
-        user: {
-          update: {
-            email,
-          },
-        },
-      },
-      include: {
-        user: {
-          select: {
-            email: true,
-          },
-        },
       },
     });
+
+    return profile;
+  }
+  async getAllProfiles(): Promise<Profile[] | null> {
+    const profile = await prisma.profile.findMany({});
 
     return profile;
   }

@@ -8,6 +8,11 @@ class ProfileService {
     if (!profile) throw new Error("profile not found");
     return profile;
   }
+  async getAllProfiles(): Promise<Profile[]> {
+    const profile = await profileRepository.getAllProfiles();
+    if (!profile) throw new Error("profile not found");
+    return profile;
+  }
 
   async getProfileByProfileId(profileId: number): Promise<Profile> {
     const profile = await profileRepository.findProfileByUserId(profileId);

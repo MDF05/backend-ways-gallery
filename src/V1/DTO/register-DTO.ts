@@ -1,6 +1,6 @@
 import { LoginDTO } from "./login-DTO";
 export interface registerDTO {
-  name: string;
+  fullName: string;
   email: string;
   password: string;
 }

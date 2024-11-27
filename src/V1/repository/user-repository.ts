@@ -7,7 +7,7 @@ class UserRepository {
   async findNameOrEmail(dto: LoginDTO): Promise<User | null> {
     const user = await prisma.user.findFirst({
       where: {
-        OR: [{ email: dto.nameOrEmail }, { profile: { name: dto.nameOrEmail } }],
+        OR: [{ email: dto.nameOrEmail }, { profile: { fullName: dto.nameOrEmail } }],
       },
     });
     return user;
@@ -16,20 +16,20 @@ class UserRepository {
   async checkUserByNameOrEmail(nameOrEmail: string): Promise<User | null> {
     const user = await prisma.user.findFirst({
       where: {
-        OR: [{ email: nameOrEmail }, { profile: { name: nameOrEmail } }],
+        OR: [{ email: nameOrEmail }, { profile: { fullName: nameOrEmail } }],
       },
     });
     return user;
   }
 
   async createUser(dto: registerDTO): Promise<User> {
-    const { name, ...otherDto } = dto;
+    const { fullName, ...otherDto } = dto;
     const user = await prisma.user.create({
       data: {
         ...otherDto,
         profile: {
           create: {
-            name,
+            fullName,
           },
         },
       },

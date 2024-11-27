@@ -38,7 +38,7 @@ class Cloudinary {
         images.map(async (file) => {
           const b64 = Buffer.from(file.buffer).toString("base64");
           const dataURI = `data:${file.mimetype};base64,${b64}`;
-          const result = await cloudinary.uploader.upload(dataURI, { folder: "dumbmerch" });
+          const result = await cloudinary.uploader.upload(dataURI, { folder: "waysGallery" });
           imageUrl.push({ imageUrl: result.secure_url });
         }),
       );

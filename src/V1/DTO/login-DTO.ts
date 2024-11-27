@@ -1,4 +1,4 @@
-import { User } from '@prisma/client';
+import { User } from "@prisma/client";
 
 export interface LoginDTO {
   nameOrEmail: string;
@@ -7,5 +7,5 @@ export interface LoginDTO {
 
 export interface loginResponseDTO {
   token: string;
-  user: Omit<User, 'password'>;
+  user: Omit<User, "password">;
 }

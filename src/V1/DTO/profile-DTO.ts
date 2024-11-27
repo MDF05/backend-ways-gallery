@@ -1,7 +1,6 @@
 export interface profileDTO {
-  name: string;
-  email: string;
-  phone: string;
-  gender: string;
-  address: string;
+  fullName: string;
+  greeting: string;
+  avatar?: string;
+  bestArt?: string;
 }
