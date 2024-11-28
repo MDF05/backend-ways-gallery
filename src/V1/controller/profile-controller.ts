@@ -11,7 +11,7 @@ class ProfileController {
     try {
       const user: User = res.locals.user;
       const profile: Profile = await profileService.getProfileByUserId(user.id);
-      res.json(successResponse("data received", { profile }));
+      res.json(successResponse("data received", profile));
     } catch (err: unknown) {
       if (err instanceof Error) next(createError(err.message, 400));
       else next(createError("sorry server error ", 500));
@@ -50,7 +50,7 @@ class ProfileController {
       if (bestArt) newProfile.bestArt = bestArt[0].imageUrl;
 
       const profile: Profile = await profileService.putProfileByProfileId(profileId, newProfile);
-      res.json(successResponse("data received", { profile }));
+      res.json(successResponse("data received", profile));
     } catch (err: unknown) {
       console.log(err);
       if (err instanceof Error) next(createError(err.message, 400));
