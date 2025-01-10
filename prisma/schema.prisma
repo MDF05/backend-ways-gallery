@@ -25,8 +25,11 @@ model User {
   profile  Profile?
   role     Role     @default(USER)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  Project   Project[]
+  hiring    Hire[]    @relation(name: "hiring")
+  hired     Hire[]    @relation(name: "hired")
 }
 
 model Profile {
@@ -42,11 +45,39 @@ model Profile {
   updatedAt DateTime @default(now())
 }
 
-model ImageProduct {
+model ImageProject {
   id        Int    @id @default(autoincrement())
-  productId Int
   imageUrl  String
+  projectId Int?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
+  Project   Project? @relation(fields: [projectId], references: [id])
+}
+
+model Project {
+  id          Int            @id @default(autoincrement())
+  title       String
+  description String
+  userId      Int
+  user        User           @relation(fields: [userId], references: [id])
+  images      ImageProject[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  hiredId   Int?
+}
+
+model Hire {
+  id           Int      @id @default(autoincrement())
+  hiringId     Int
+  hiredId      Int
+  title        String
+  description  String
+  price        Int
+  startProject DateTime
+  endProject   DateTime
+
+  hiring User @relation(name: "hiring", fields: [hiringId], references: [id])
+  hired  User @relation(name: "hired", fields: [hiredId], references: [id])
 }
